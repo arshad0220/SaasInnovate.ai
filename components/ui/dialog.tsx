@@ -7,11 +7,15 @@ const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
 
 // Define the type for DialogPortalProps
-const DialogPortal: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
+type DialogPortalProps = {
+  className?: string; // Make className prop optional
+} & React.HTMLAttributes<HTMLDivElement>;
+
+const DialogPortal: React.FC<DialogPortalProps> = ({
   className,
   ...props
 }) => (
-  <DialogPrimitive.Portal {...props}>
+  <DialogPrimitive.Portal>
     <div className={cn(className)}>
       {props.children}
     </div>

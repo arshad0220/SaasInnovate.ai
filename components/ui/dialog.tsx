@@ -7,11 +7,7 @@ const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
 
 // Define the type for DialogPortalProps
-type DialogPortalProps = {
-  className?: string; // Make className prop optional
-} & React.HTMLAttributes<HTMLDivElement>;
-
-const DialogPortal: React.FC<DialogPortalProps> = ({
+const DialogPortal: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   className,
   ...props
 }) => (
@@ -30,13 +26,12 @@ const DialogOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     {...props}
-  >
-    <div className={cn(
+    className={cn(
       "fixed inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       className
-    )}>
-      {props.children}
-    </div>
+    )}
+  >
+    {props.children}
   </DialogPrimitive.Overlay>
 ));
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
@@ -45,7 +40,7 @@ const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
-  <DialogPortal>
+  <DialogPortal className={className}>
     <DialogOverlay />
     <DialogPrimitive.Content
       ref={ref}
